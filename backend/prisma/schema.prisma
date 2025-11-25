@@ -5,7 +5,7 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../generated/prisma"
 }
 
@@ -17,27 +17,36 @@ model Genre{
   id Int @id @default(autoincrement())
   name String
   url String
-  books Book[]
+  book GenreonBook[]
+
 }
 model Book {
   id Int @id @default(autoincrement())
   title String
   summary String
-  ISBN String
-  genres Genre[]
+  isbn String
   url String
-  author Author?
+  authorId Int
+  author Author @relation(fields: [authorId], references: [id])
+  genre GenreonBook[]
+}
+model GenreonBook{
+  bookId Int 
+  book Book @relation(fields: [bookId], references: [id])
+  genreId Int 
+  genre Genre @relation(fields: [genreId], references: [id])
+  @@id([bookId,genreId])
 }
 model Author{
   id Int @id @default(autoincrement())
   first_name String
   family_name String
   date_of_birth DateTime
-  date_of_death DateTime
+  date_of_death DateTime?
   name String
-  lifespan String
-  book_id Int @unique
+  lifespan String?
+  bookId Int @unique
   url String
-  book Book? @relation(fields:[book_id],references:[id])
+  book Book[]
 
 }
