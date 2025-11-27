@@ -55,7 +55,27 @@ const getAuthorById=async(req,res)=>{
         console.log(err)
     }
 }
-const updateAuthor=async(req,res)=>{}
+const updateAuthor=async(req,res)=>{
+    const {id}=req.params
+    const {first_name,family_name,date_of_birth,date_of_death,name,lifespan,url}=req.body
+    if(!id){
+            res.status(404).json({"message":"Not found"})
+        }
+    try{
+        const a=await prisma.author.update({
+            where:{
+                id:Number(id)
+            },
+            data:{
+                first_name,family_name,date_of_birth,date_of_death,name,lifespan,url
+            }
+        })
+        res.status(201).json(a)
+    }
+    catch(err){
+        console.log(err)
+    }
+}
 const deleteAuthor=async(req,res)=>{}
 
 module.exports={createAuthor,getAllAuthor,getAuthorById,updateAuthor,deleteAuthor}
