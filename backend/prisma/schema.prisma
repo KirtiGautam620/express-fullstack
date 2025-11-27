@@ -28,7 +28,7 @@ model Book {
   url String
   authorId Int
   author Author @relation(fields: [authorId], references: [id])
-  genre GenreonBook[]
+  genres GenreonBook[]
 }
 model GenreonBook{
   bookId Int 
