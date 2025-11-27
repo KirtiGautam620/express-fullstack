@@ -17,7 +17,7 @@ model Genre{
   id Int @id @default(autoincrement())
   name String
   url String
-  books GenreonBook[]
+  book GenreonBook[]
 
 }
 model Book {
@@ -32,7 +32,7 @@ model Book {
 }
 model GenreonBook{
   bookId Int 
-  book Book @relation(fields: [bookId], references: [id])
+  books Book @relation(fields: [bookId], references: [id])
   genreId Int 
   genre Genre @relation(fields: [genreId], references: [id])
   @@id([bookId,genreId])

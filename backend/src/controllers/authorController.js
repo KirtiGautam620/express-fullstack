@@ -20,8 +20,24 @@ const createAuthor=async(req,res)=>{
     res.status(201).json(a)
 }
 
-const getAllAuthor=async(req,res)=>{}
-const getAuthorById=async(req,res)=>{}
+const getAllAuthor=async(req,res)=>{
+    try{
+        const u=await prisma.author.findMany({
+            include:{
+                book:true
+            }
+        })
+        res.status(201).json(u) 
+    }
+    catch(err){
+        console.log(err)
+    }
+
+}
+const getAuthorById=async(req,res)=>{
+    const {id}=req.params
+    
+}
 const updateAuthor=async(req,res)=>{}
 const deleteAuthor=async(req,res)=>{}
 

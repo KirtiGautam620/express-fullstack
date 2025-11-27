@@ -27,7 +27,7 @@ const getAllGenre = async (req,res)=>{
                             select:{
                                 title:true,
                                 summary:true
-                    }
+                            }
                         }
                     }
                     
