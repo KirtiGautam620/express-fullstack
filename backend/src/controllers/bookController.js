@@ -126,6 +126,24 @@ const updateBook=async(req,res)=>{
     }
 }
 
-const deleteBook=async(req,res)=>{}
+const deleteBook=async(req,res)=>{
+    const {id}=req.params
+    try{
+        await prisma.genreonBook.deleteMany({
+            where:{
+                bookId:Number(id)
+            }
+        })
+        const d=await prisma.book.delete({
+            where:{
+                id:Number(id)
+            }
+        })
+        res.status(201).json(d)
+    }
+    catch(err){
+        console.log(err)
+    }
+}
 
 module.exports={createBook,getAllBook,getBookById,updateBook,deleteBook}
