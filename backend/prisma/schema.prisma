@@ -17,7 +17,7 @@ model Genre{
   id Int @id @default(autoincrement())
   name String
   url String
-  book GenreonBook[]
+  books GenreonBook[]
 
 }
 model Book {
@@ -45,7 +45,6 @@ model Author{
   date_of_death DateTime?
   name String
   lifespan String?
-  bookId Int @unique
   url String
   book Book[]
 
