@@ -35,7 +35,33 @@ const createBook=async(req,res)=>{
     
 }
 
-const getAllBook=async(req,res)=>{}
+const getAllBook=async(req,res)=>{
+    try{
+        const b=await prisma.book.findMany({
+            include:{
+                author:{
+                    select:{
+                        name:true
+                    }
+                },
+                genres:{
+                    include:{
+                        genre:{
+                            select:{
+                                name:true,
+                                url:true
+                            }
+                        }
+                    }
+                }
+            }
+        })
+        res.status(201).json(b)
+    }
+    catch(err){
+        console.log(err)
+    }
+}
 
 const getBookById=async(req,res)=>{}
 
