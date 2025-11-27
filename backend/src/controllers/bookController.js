@@ -63,7 +63,40 @@ const getAllBook=async(req,res)=>{
     }
 }
 
-const getBookById=async(req,res)=>{}
+const getBookById=async(req,res)=>{
+    const {id}=req.params
+    if(!id){
+        res.status(400).json({"message":"invalid"})
+    }
+    try{
+        const u=await prisma.book.findUnique({
+            where:{
+                id:Number(id)
+            },
+                include:{
+                    author:{
+                        select:{
+                            name:true
+                        }
+                    },
+                    genres:{
+                        include:{
+                            genre:{
+                                select:{
+                                    name:true,
+                                    url:true
+                                }
+                            }
+                        }
+                    }
+                }
+        })
+        res.status(201).json({"message":u})
+    }
+    catch(err){
+        console.log(err)
+    }
+}
 
 const updateBook=async(req,res)=>{}
 
