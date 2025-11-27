@@ -36,7 +36,24 @@ const getAllAuthor=async(req,res)=>{
 }
 const getAuthorById=async(req,res)=>{
     const {id}=req.params
-    
+    if(!id){
+        res.status(400).json({message:"required id"})
+    }
+    try{
+        const a=await prisma.author.findUnique({
+            where:{
+                id:Number(id)
+            },
+                include:{
+                    book:true
+                }
+            
+        })
+        res.status(201).json({"message":a})
+    }
+    catch(err){
+        console.log(err)
+    }
 }
 const updateAuthor=async(req,res)=>{}
 const deleteAuthor=async(req,res)=>{}
