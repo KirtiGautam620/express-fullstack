@@ -98,7 +98,33 @@ const getBookById=async(req,res)=>{
     }
 }
 
-const updateBook=async(req,res)=>{}
+const updateBook=async(req,res)=>{
+    const {id}=req.params
+    try{
+        const up=await prisma.book.update({
+            where:{
+                id:id
+            },
+            include:{
+                author:{
+                    name:true
+                },
+                genres:{
+                    include:{
+                        genre:{
+                            name:true,
+                            url:true
+                        }
+                    }
+                }
+            }
+        })
+        res.status(201).json(up)
+    }
+    catch(err){
+        console.log(err)
+    }
+}
 
 const deleteBook=async(req,res)=>{}
 
